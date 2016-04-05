@@ -23,20 +23,21 @@ cd grid-docker-bootstrap
  
  * Show usage
 
-```
+ ```
 ./grid-docker-bootstrap
 ```
 
 
  * Run
 
-```
+ ```
 export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel
- ./grid-docker-bootstrap python /tensorflow/tensorflow/models/image/mnist/convolutional.py
+./grid-docker-bootstrap python /tensorflow/tensorflow/models/image/mnist/convolutional.py
 ```
 
 
  * Run by interactive mode
+
  ```
 export DOCKER_INTERACTIVE=ON
 export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel
