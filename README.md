@@ -1,6 +1,7 @@
 grid-docker-bootstrap
 =============
-Docker VM bootstrap loader
+The Docker VM bootstrap loader.
+
 This script is the first step of a Docker environment builder in a grid cluster. 
 
 0. The grid-docker-bootstrap script directly executes "docker run" command with some proper VM image parameters and configurations in a cluster.
