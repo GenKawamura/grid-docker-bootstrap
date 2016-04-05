@@ -14,21 +14,31 @@ Usages
 -----
 
  * Clone
- ```git clone https://github.com/GenKawamura/grid-docker-bootstrap
+
+ ```
+git clone https://github.com/GenKawamura/grid-docker-bootstrap
 cd grid-docker-bootstrap
 ```
+
  
  * Show usage
- ```./grid-docker-bootstrap
+
+```
+./grid-docker-bootstrap
 ```
 
+
  * Run
- ```export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel
+
+```
+export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel
  ./grid-docker-bootstrap python /tensorflow/tensorflow/models/image/mnist/convolutional.py
 ```
 
+
  * Run by interactive mode
- ```export DOCKER_INTERACTIVE=ON
+ ```
+export DOCKER_INTERACTIVE=ON
 export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel
 ./grid-docker-bootstrap
 ```
