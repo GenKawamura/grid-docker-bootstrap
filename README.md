@@ -33,7 +33,7 @@ cd grid-docker-bootstrap
 
  ```
 export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel
-./grid-docker-bootstrap python /tensorflow/tensorflow/models/image/mnist/convolutional.py
+./grid-docker-bootstrap python /tensorflow/tensorflow/examples/tutorials/mnist/mnist_softmax.py
 ```
 
 
