@@ -9,19 +9,26 @@ This script is the first step of a Docker environment builder in a grid cluster.
 
 Some other issues will be added later.
 
-# Usages
+
+Usages
+-----
+
  * Clone
- `git clone https://github.com/GenKawamura/grid-docker-bootstrap`
- `cd grid-docker-bootstrap`
+ ```git clone https://github.com/GenKawamura/grid-docker-bootstrap
+cd grid-docker-bootstrap
+```
  
  * Show usage
- `./grid-docker-bootstrap`
+ ```./grid-docker-bootstrap
+```
 
  * Run
- `export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel`
- `./grid-docker-bootstrap python /tensorflow/tensorflow/models/image/mnist/convolutional.py`
+ ```export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel
+ ./grid-docker-bootstrap python /tensorflow/tensorflow/models/image/mnist/convolutional.py
+```
 
  * Run by interactive mode
- `export DOCKER_INTERACTIVE=ON`
- `export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel`
- `./grid-docker-bootstrap`
+ ```export DOCKER_INTERACTIVE=ON
+export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow:latest-devel
+./grid-docker-bootstrap
+```
