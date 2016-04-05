@@ -1,0 +1,77 @@
+#!/bin/bash
+#----------------------------------------------------------
+# Docker bootstrap executable for "Docker v1.7"
+#  https://docs.docker.com/v1.8/reference/commandline/run/
+#  https://docs.docker.com/engine/userguide/containers/dockervolumes/
+#  http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container
+#
+#  @author Gen.Kawamura
+#  @version 0.01
+#----------------------------------------------------------
+
+#----------------------------------------------------------
+# Check env
+#----------------------------------------------------------
+if [ -z "$DOCKER_IMG" ]; then
+    echo "DOCKER_IMG is not specified!"
+    echo "Use image env, e.g. 'export DOCKER_IMG=b.gcr.io/tensorflow/tensorflow' (TensorFlow)"
+    exit -1
+fi
+
+#----------------------------------------------------------
+# Env
+#----------------------------------------------------------
+export TMPDIR=$TMPDIR
+
+export DOCKER_HOME=/root
+export DOCKER_TMPDIR=$TMPDIR
+export DOCKER_TMPDIR_OPTION=""
+
+
+[ -z "$USE_DOCKER_ENV" ] && export USE_DOCKER_ENV="ON"
+if [ "$USE_DOCKER_ENV" != "OFF" ]; then
+    export DOCKER_ENV_FILE=$(mktemp)
+    env | grep "^[a-zA-Z0-9_]*=.*$" | grep -v -e "^HOSTNAME=" -e "^USER=" -e "^PWD=" -e "^PATH=" -e "^LD_LIBRARY_PATH=" > $DOCKER_ENV_FILE
+    export DOCKER_ENV_OPTION="--env-file $DOCKER_ENV_FILE"
+fi
+
+#----------------------------------------------------------
+# Main
+#----------------------------------------------------------
+if [ "$DOCKER_INTERACTIVE" == "ON" ]; then
+    export DOCKER_INTERACTIVE_OPTION="-it"
+else
+    export DOCKER_INTERACTIVE=OFF
+    export EXECUTABLE_COMMAND="$*"
+    if [ -z "$EXECUTABLE_COMMAND" ]; then
+	echo "Usage: $0 [EXECUTABLE_COMMAND]"
+	echo "EXECUTABLE_COMMAND is null!"
+	exit -1
+    fi
+fi
+
+echo "* Starting Docker Bootstrap ...
+---------------------------------------
+DOCKER_IMG = $DOCKER_IMG
+DOCKER_INTERACTIVE = $DOCKER_INTERACTIVE
+USE_DOCKER_ENV = $USE_DOCKER_ENV
+TMPDIR = $TMPDIR
+
+DOCKER_HOME = $DOCKER_HOME
+EXECUTABLE_COMMAND = $EXECUTABLE_COMMAND
+DOCKER_ENV_FILE = $DOCKER_ENV_FILE
+DOCKER_TMPDIR = $DOCKER_TMPDIR
+---------------------------------------
+"
+[ ! -z "$TMPDIR" ] && export DOCKER_TMPDIR_OPTION="-v $TMPDIR:$DOCKER_TMPDIR"
+
+## RUN
+docker images | grep "^$DOCKER_IMG" || docker pull $DOCKER_IMG
+DOCKER_RUN="docker run -v $PWD:$DOCKER_HOME $DOCKER_TMPDIR_OPTION $DOCKER_ENV_OPTION $DOCKER_INTERACTIVE_OPTION $DOCKER_IMG $EXECUTABLE_COMMAND"
+echo "$DOCKER_RUN"
+eval $DOCKER_RUN
+
+## END
+RET=$?
+[ -e "$DOCKER_ENV_FILE" ] && rm $DOCKER_ENV_FILE
+exit $RET
